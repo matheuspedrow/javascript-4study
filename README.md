@@ -17,7 +17,7 @@ A motivação inicial foi numa tentativa de ensinar minha namorada a programar.
          * [Exercício 1.2](#exercício-12)
          * [Exercício 1.3](#exercício-13)
          * [Exercício 1.4](#exercício-14)
-      * [2. Condicionais (<em>if</em>, <em>else</em>)](#2-condicionais-if-else)
+   * [2. Condicionais (<em>if</em>, <em>else</em>)](#2-condicionais-if-else)
          * [Exercício 2.1](#exercício-21)
          * [Exercício 2.2](#exercício-22)
          * [Exercício 2.3](#exercício-23)
@@ -62,20 +62,21 @@ Faça um programa que **exiba** 3 números na tela.
 Dica - exibindo (ou "imprimindo") números na tela:
 
 ```javascript
-var a = 23;
+const a = 23;
 console.log(a);
 ```
 
 ### Exercício 1.2
 
-Faça um programa que **leia** 3 números e **exiba**-os na tela.
+Faça um programa que **leia** 3 números e **exiba** a soma na tela.
 
 Dica - lendo números:
 ```javascript
-// abre uma janelinha com um "prompt" que lê um número digitado pelo
-// usuário e atribui o resultado a variável "v1"
-var v1;
-v1 = Number (prompt ());
+// prompt retorna string; converta para número quando for calcular
+const n1 = parseFloat(prompt('Digite um número:'));
+const n2 = parseFloat(prompt('Digite outro número:'));
+const n3 = parseFloat(prompt('Digite o último número:'));
+console.log(n1 + n2 + n3);
 ```
 
 ### Exercício 1.3
@@ -84,9 +85,9 @@ Faça um programa que **leia** 3 números, **some**-os e **exiba** a média entr
 
 Dica:
 ```
-A média entre dois números, é a soma dos dois números divididos por 2
-A média entre três números, é a some dos três números divididos por 3
-A média entre 'n' números, é a some dos 'n' números divididos por 'n'
+A média entre dois números é a soma dos dois números dividida por 2
+A média entre três números é a soma dos três números dividida por 3
+A média entre 'n' números é a soma dos 'n' números dividida por 'n'
 ```
 
 ### Exercício 1.4
@@ -95,25 +96,42 @@ Faça um programa que leia do usuário uma temperatura em Fahrenheit, converta-a
 
 ## 2. Condicionais (_if_, _else_)
 
+Observação: nesta lista utilizaremos preferencialmente o operador ternário (`condicao ? valorSeVerdadeiro : valorSeFalso`) no lugar de `if/else` para decisões simples.
+
 ### Exercício 2.1 
 
 Faça um programa que leia 2 números, some-os e exiba uma mensagem com o resultado apenas **se** o resultado for maior que 100.
 
+Dica:
+```javascript
+const n1 = parseFloat(prompt('Digite o primeiro número:'));
+const n2 = parseFloat(prompt('Digite o segundo número:'));
+
+isNaN(n1) || isNaN(n2)
+  ? alert('Por favor, digite números válidos.')
+  : (
+      soma = n1 + n2,
+      soma > 100
+        ? alert(`A soma dos números é ${soma}, que é maior que 100.`)
+        : alert(`A soma dos números é ${soma}, que é menor ou igual a 100.`)
+    );
+```
+
 
 ### Exercício 2.2
 
-Para um jogo, precisamos saber se um personagem morreu ou não depois de sofrer um ataque. Faça uma função que receba 2 parâmetros, 'dano' e 'saude'. A função deve retornar '1' se o dano for matar o personagem (ou seja, deixar sua saúde menor ou igual a zero) e '0' caso contrário.
+Para um jogo, precisamos saber se um personagem morreu ou não depois de sofrer um ataque. Faça uma função que receba 2 parâmetros, 'dano' e 'saude'. Nesta lista, a função deve retornar a string "Morreu" se `dano >= saude` e "Vivo" caso contrário.
 
 Dica - utilize a seguinte função:
 ```javascript
-function personagemMorreu (dano, saude) {
-  //
+function personagemMorreu(dano, saude) {
+  return dano >= saude ? 'Morreu' : 'Vivo';
 }
 ```
 
 ### Exercício 2.3
 
-Precisamos limitar as posições em que um inimigo pode andar na tela. A menor posição possível é 0 e a maior, 100: qualquer valor maior que 100 ou menor que 0 sairia fora da tela. Precisamos de uma função LimitaPosicao que recebe uma POSICAO que pode ter qualquer valor positivo ou negativo, verifica se ela é válida ou não e retorna sempre um valor corrigido entre 0 e 100.
+Precisamos limitar as posições em que um inimigo pode andar na tela. A menor posição possível é 0 e a maior, 100: qualquer valor maior que 100 ou menor que 0 sairia fora da tela. Precisamos de uma função `limitaPosicao` que recebe uma posição (valor positivo ou negativo), verifica se ela é válida ou não e retorna sempre um valor entre 0 e 100. Dica: use o operador de módulo (`%`) e ajuste valores negativos.
 
 Dica - utilize a seguinte função:
 ```javascript
@@ -128,11 +146,11 @@ function limitaPosicao (posicao) {
 
 Faça um programa que leia um número e verifique se ele é par ou ímpar. Exiba uma mensagem indicando o resultado.
 
-Dica - Use o operador de módulo (%) para verificar se um número é divisível por 2.
+Dica - Use o operador de módulo (%) para verificar se um número é divisível por 2 e um operador ternário para decidir a mensagem.
 
 ```javascript
 function verificaParOuImpar(numero) {
-    //código da função
+  numero % 2 === 0 ? console.log(numero + ' é par') : console.log(numero + ' é ímpar');
 }
 ```
 
@@ -140,11 +158,12 @@ function verificaParOuImpar(numero) {
 
 Faça um programa que leia três números e exiba o maior entre eles.
 
-Dica - Use uma série de comparações if para verificar qual número é o maior e, em seguida, exiba o resultado.
+Dica - Você pode usar ternários encadeados ou `Math.max` para determinar o maior número.
 
 ```javascript
 function encontraMaiorNumero(num1, num2, num3) {
-    //código da função
+  const maior = (num1 >= num2 && num1 >= num3) ? num1 : (num2 >= num1 && num2 >= num3) ? num2 : num3;
+  console.log('O maior número é:', maior);
 }
 ```
 
@@ -152,11 +171,11 @@ function encontraMaiorNumero(num1, num2, num3) {
 
 Faça um programa que leia um número e determine se ele é positivo, negativo ou zero.
 
-Dica - Utilize uma série de condições if para verificar a natureza do número.
+Dica - Utilize operadores ternários encadeados para cobrir positivo, negativo e zero.
 
 ```javascript
 function verificaNumero(numero) {
-    //código da função
+  numero > 0 ? console.log(numero + ' é positivo') : numero < 0 ? console.log(numero + ' é negativo') : console.log(numero + ' é zero');
 }
 ```
 
@@ -169,7 +188,25 @@ Escreva um programa que calcule e mostre a tabuada (até 10x) de um número qual
 ## 5. Vetores (array)
 
 ### Exercício 5.1
-Faça um programa que leia um vetor numérico de 10 posições. Depois, ordene o vetor em ordem crescente e apresente os elementos ordenados.
+Faça um programa que leia um vetor numérico de 10 posições. Depois, percorra o vetor e exiba o maior valor encontrado.
+
+Dica:
+```javascript
+const vet = [10];
+let p = 0;
+while (p < 10) {
+  vet[p] = parseFloat(prompt('Digite um número:'));
+  p = p + 1;
+}
+
+let maior = vet[0];
+let i = 0;
+while (i < vet.length) {
+  maior = vet[i] > maior ? vet[i] : maior;
+  i = i + 1;
+}
+console.log('Maior número encontrado no vetor é:', maior);
+```
 
 # Respostas
 
